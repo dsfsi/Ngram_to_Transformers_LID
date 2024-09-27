@@ -1,8 +1,8 @@
 for j in 1 2 3 4 5
 do
 	export MAX_LENGTH=200
-	export BERT_MODEL=bert-base-uncased
-	export OUTPUT_DIR=../../../../../ext_data/thapelo/LID_Transformers_Checkpoints/BERT_lid_vuk
+	export BERT_MODEL=castorini/afriberta_large
+	export OUTPUT_DIR=../../../../../ext_data/thapelo/LID_Transformers_Checkpoints/afriberta_lid_vuk
 	export TEXT_RESULT=test_result$j.txt
 	export TEXT_PREDICTION=test_predictions$j.txt
 	export BATCH_SIZE=16
@@ -11,7 +11,7 @@ do
 	export SEED=$j
 
 	python3 ../LID_Transformers.py --data_dir ../Csv_Train_test_split/ \
-	--model_type bert \
+	--model_type xlmroberta \
 	--model_name_or_path $BERT_MODEL \
 	--output_dir $OUTPUT_DIR \
 	--max_seq_length  $MAX_LENGTH \
