@@ -2,7 +2,7 @@ for j in 1 2 3 4 5
 do
 	export MAX_LENGTH=200
 	export BERT_MODEL=distilbert/distilbert-base-uncased
-	export OUTPUT_DIR=../../../../../ext_data/thapelo/LID_Transformers_Checkpoints/distilbert_lid_vuk
+	export OUTPUT_DIR=../distilbert_lid_vuk
 	export TEXT_RESULT=test_result$j.txt
 	export TEXT_PREDICTION=test_predictions$j.txt
 	export BATCH_SIZE=16

@@ -2,7 +2,7 @@ for j in 1 2 3 4 5
 do
 	export MAX_LENGTH=200
 	export BERT_MODEL=Davlan/afro-xlmr-large
-	export OUTPUT_DIR=../../../../../../ext_data/neo/CTEXT_LID/afroxlmrlarge_lid_nc
+	export OUTPUT_DIR=../afroxlmrlarge_lid_vuk
 	export TEXT_RESULT=test_result$j.txt
 	export TEXT_PREDICTION=test_predictions$j.txt
 	export BATCH_SIZE=16
@@ -10,7 +10,7 @@ do
 	export SAVE_STEPS=10000
 	export SEED=$j
 
-	python3 ../LID_Transformers.py --data_dir ../Csv_Train_test_split_NC/ \
+	python3 ../LID_Transformers.py --data_dir ../Csv_Train_test_split/ \
 	--model_type xlmroberta \
 	--model_name_or_path $BERT_MODEL \
 	--output_dir $OUTPUT_DIR \
