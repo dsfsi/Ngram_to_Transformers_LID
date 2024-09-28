@@ -259,7 +259,7 @@ def evaluate(path_to_data, models):
 # Example text data
 train_data_root_path = "./Train_test_split/"
 models_root_path = './Q-Models/'
-bi_sorted        = "../../../../../ext_data/thapelo/CTEXT_Work/AlignedGov/Q-Gram-Alinged/"
+bi_sorted        = "../Q-Gram-Alinged/"
 n = [2,3,4]  # Here we are choosing bigrams,trigrams and quadgrams; change this value to get n-grams with a particular n
 k = 50 
 if __name__ == "__main__":
@@ -349,67 +349,3 @@ if __name__ == "__main__":
             for key in sorted(metric_scores.keys()):
                 if key != 'confusion_matrix':
                        writer.write("{} = {}\n".format(key, str(metric_scores[key])))
-        # # Test sentences
-        # ctext_root_folder = '../../../../../ext_data/thapelo/CTEXT_Work/AlignedGov/data_extracted/'
-        # for root, dirs, files in os.walk(ctext_root_folder):
-        #         for file in files:
-        #                 # Construct the full path to the file
-        #                 text_path = os.path.join(root, file)
-                        
-        #                 # Open the file
-        #                 with open(text_path, 'r') as f:
-        #                     # Read the contents of the file
-        #                     sentences = f.readlines()
-
-        #                 # filter sentences
-        #                 filtered_sentences = filter_sentences(sentences)
-
-        #                 # Identify language for each sentence
-        #                 for sentence in filtered_sentences:
-                             
-        #                     if len("".join(filter(lambda x: not x.isdigit(), sentence)).lower().split()) > 3:
-        #                                 identified_language = language_identify_2("".join(filter(lambda x: not x.isdigit(), sentence)).lower(), 'string')
-        #                                 if identified_language == 'nso':
-        #                                         with open(bi_sorted + 'tri_gram_filtered_nso.txt', 'a') as n_file:
-        #                                                         n_file.write(sentence + '\n')
-        #                                 elif  identified_language == 'tsn':
-        #                                     with open(bi_sorted + 'q_gram_filtered_tsn.txt', 'a') as tsn_file:
-        #                                                         tsn_file.write(sentence + '\n') 
-        #                                 elif identified_language == "sot":
-        #                                     with open(bi_sorted + 'q_gram_filtered_sot.txt', 'a') as n_file:
-        #                                                         n_file.write(sentence + '\n')
-        #                                 elif identified_language == 'xho':
-        #                                         with open(bi_sorted + 'q_gram_filtered_xho.txt', 'a') as n_file:
-        #                                                         n_file.write(sentence + '\n')   
-        #                                 elif identified_language == 'zul':
-        #                                     with open(bi_sorted + 'q_gram_filtered_zul.txt', 'a') as n_file:
-        #                                                         n_file.write(sentence + '\n')   
-        #                                 elif identified_language == "ssw":
-        #                                     with open(bi_sorted + 'q_gram_filtered_ssw.txt', 'a') as n_file:
-        #                                                         n_file.write(sentence + '\n')   
-        #                                 elif identified_language == "ven":
-        #                                     with open(bi_sorted + 'q_gram_filtered_ven.txt', 'a') as n_file:
-        #                                                         n_file.write(sentence + '\n') 
-        #                                 elif identified_language == 'tso':
-        #                                         with open(bi_sorted + 'q_gram_filtered_tso.txt', 'a') as n_file:
-        #                                                         n_file.write(sentence + '\n')   
-        #                                 elif identified_language == 'af':
-        #                                         with open(bi_sorted + 'q_gram_filtered_af.txt', 'a') as n_file:
-        #                                                         n_file.write(sentence + '\n')                                                                                                                                   
-        #                                 elif identified_language == 'nbl':
-        #                                     with open(bi_sorted + 'q_gram_filtered_nbl.txt', 'a') as n_file:
-        #                                                         n_file.write(sentence + '\n')
-        #                                 elif identified_language == 'eng':
-        #                                     with open(bi_sorted + 'q_gram_filtered_en.txt', 'a') as n_file:
-        #                                                         n_file.write(sentence + '\n')  
-                                                                    
-        #                                 else:
-        #                                     # print("Language Unknown...") 
-        #                                     continue 
-                                
-                           
-
-
-                    # else:
-                    #     print("File:", sub_item_path)
-                                       
