@@ -5,16 +5,12 @@ import re
 import os
 import string
 import argparse
-
-# https://github.com/dinkarjuyal/language-identification/blob/master/lang%2Bidentify.ipynb
 import sklearn
 from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, precision_score, recall_score
 import pandas as pd
 import seaborn as sn
 import matplotlib.pyplot as plt
-# plt.style.use('ggplot')
 import numpy as np
-
 from collections import defaultdict
 import seaborn as sn
 import matplotlib.pyplot as plt
@@ -26,21 +22,18 @@ from wordcloud import WordCloud
 import nltk
 from nltk.probability import FreqDist
 from nltk.util import ngrams
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report
-
 import joblib
 import pickle as pkl
 
 def preprocess_text( text):
     # Remove URLs
     text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE)
-    
     # Remove special characters and numbers (retain only alphabets and spaces)
     # text = re.sub(r'[^A-Za-z\s]', '', text)
     text = re.sub(r'[^\w\s]', '', text)
@@ -95,7 +88,7 @@ def preprocess_eval(text):
           
 
 eval_data_root_path = "../Train_test_split/"
-train_data_root_path = "../../../../../ext_data/neo/Chunks_Vuk_p_NCHLT_train_only/"
+train_data_root_path = "../Train_test_split/"
 
 if __name__ == "__main__":
         
@@ -234,15 +227,6 @@ if __name__ == "__main__":
                     "f1_score": f1_sco,
                     "precision": precision,
                     "recall": recall}
-            # wrong_ixd = [i for i,pred in enumerate(y_pred) if not pred == y_test[i]]
-            # wrong_pred = np.array(y_pred)[wrong_ixd]
-
-            # metrics["wrong_ixd"] = wrong_ixd
-            # metrics["wrong_pred"] = wrong_pred
-            # if verbose:
-            #     print(metrics)
-            #     print("wrong_ixd",wrong_ixd)
-            #     print("wrong_pred",wrong_pred)
             output_test_results_file = fname + "/test_scores.txt"
             with open(output_test_results_file, "w") as writer:
                 for key in sorted(metrics.keys()):

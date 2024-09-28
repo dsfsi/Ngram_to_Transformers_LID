@@ -40,10 +40,6 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
-
-# In[ ]:
-
-
 class Instance:
 
     def __init__(self, text, label):
@@ -671,12 +667,6 @@ def load_inference_examples(args, headlines, text,text_class,  tokenizer, labels
         dataset = TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids, all_labels)
         return dataset
             
-    
-
-
-# In[ ]:
-
-
 def get_args():
     """
     Get training arguments
@@ -805,226 +795,6 @@ def get_args():
     return parser.parse_known_args()
 
 
-# In[ ]:
-
-
-# data_path = "./LID_DATA_VuK_NCHLT"
-# create_data = Sort_CSV_into2()
-# create_data.read_and_init('./CSV_Train_Test_Split_NCHLT_plus_Vuk/')
-# create_data.save_dataframes('./LID_DATA_VuK_NCHLT/')
-
-
-# In[ ]:
-
-
-# data_path = data_path
-# args, _ = get_args()
-# args.data_dir = data_path  # to-change: supply data directory
-# args.output_dir = "../../../../../ext_data/neo/CTEXT_LID/afroxlmrbase_lid/" # to-change: supply output directory
-# args.model_type = "xlmroberta" #"bert"
-# args.model_name_or_path = "Davlan/afro-xlmr-base" #"bert-base-multilingual-cased"
-# args.max_seq_length = 200
-# args.output_result = "test_result"
-# args.output_prediction_file = "test_prediction"
-# args.num_train_epochs = 2
-# args.per_gpu_train_batch_size = 2
-# args.save_steps = 10000
-# args.seed = 1
-# args.do_train = True
-# args.do_eval = True
-# args.do_predict = True
-
-
-# In[ ]:
-
-
-# def main(args):
-#     if (
-#         os.path.exists(args.output_dir)
-#         and os.listdir(args.output_dir)
-#         and args.do_train
-#         and not args.overwrite_output_dir
-#     ):
-#         raise ValueError(
-#             "Output directory ({}) already exists and is not empty. Use --overwrite_output_dir to overcome.".format(
-#                 args.output_dir
-#             )
-#         )
-
-#     # Setup distant debugging if needed
-#     if args.server_ip and args.server_port:
-#         # Distant debugging - see https://code.visualstudio.com/docs/python/debugging#_attach-to-a-local-script
-#         import ptvsd
-
-#         print("Waiting for debugger attach")
-#         ptvsd.enable_attach(address=(args.server_ip, args.server_port), redirect_output=True)
-#         ptvsd.wait_for_attach()
-
-#     # Setup CUDA, GPU & distributed training
-#     if args.local_rank == -1 or args.no_cuda:
-#         device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
-#         args.n_gpu = torch.cuda.device_count()
-#     else:  # Initializes the distributed backend which will take care of sychronizing nodes/GPUs
-#         torch.cuda.set_device(args.local_rank)
-#         device = torch.device("cuda", args.local_rank)
-#         torch.distributed.init_process_group(backend="nccl")
-#         args.n_gpu = 1
-#     args.device = device
-
-#     # Setup logging
-#     logging.basicConfig(
-#         format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
-#         datefmt="%m/%d/%Y %H:%M:%S",
-#         level=logging.INFO if args.local_rank in [-1, 0] else logging.WARN,
-#     )
-#     logger.warning(
-#         "Process rank: %s, device: %s, n_gpu: %s, distributed training: %s,",
-#         args.local_rank,
-#         device,
-#         args.n_gpu,
-#         bool(args.local_rank != -1),
-#     )
-
-#     # Set seed
-#     set_seed(args)
-
-#     labels = get_labels(args.labels)
-#     num_labels = len(labels)
-
-
-#     # Load pretrained model and tokenizer
-#     if args.local_rank not in [-1, 0]:
-#         torch.distributed.barrier()  # Make sure only the first process in distributed training will download model & vocab
-
-#     args.model_type = args.model_type.lower()
-#     config_class, model_class, tokenizer_class = AutoConfig, AutoModelForSequenceClassification, AutoTokenizer
-#     config = config_class.from_pretrained(
-#         args.config_name if args.config_name else args.model_name_or_path,
-#         num_labels=num_labels,
-#         id2label={str(i): label for i, label in enumerate(labels)},
-#         label2id={label: i for i, label in enumerate(labels)},
-#         cache_dir=args.cache_dir if args.cache_dir else None,
-#     )
-#     tokenizer = tokenizer_class.from_pretrained(
-#         args.tokenizer_name if args.tokenizer_name else args.model_name_or_path,
-#         do_lower_case=args.do_lower_case,
-#         cache_dir=args.cache_dir if args.cache_dir else None,
-#     )
-#     model = model_class.from_pretrained(
-#         args.model_name_or_path,
-#         from_tf=bool(".ckpt" in args.model_name_or_path),
-#         config=config,
-#         cache_dir=args.cache_dir if args.cache_dir else None,
-#     )
-
-#     if args.local_rank == 0:
-#         torch.distributed.barrier()  # Make sure only the first process in distributed training will download model & vocab
-
-#     model.to(args.device)
-
-#     logger.info("Training/evaluation parameters %s", args)
-
-#     # Training
-#     if args.do_train:
-#         train_dataset = load_and_cache_examples(args, tokenizer, labels, mode="train")
-#         dev_dataset = load_and_cache_examples(args, tokenizer, labels, mode="dev")
-#         global_step, tr_loss = train(args, train_dataset, dev_dataset, labels, model, tokenizer)
-#         logger.info(" global_step = %s, average loss = %s", global_step, tr_loss)
-
-
-#     # Saving best-practices: if you use defaults names for the model, you can reload it using from_pretrained()
-#     if args.do_train and (args.local_rank == -1 or torch.distributed.get_rank() == 0):
-#         # Create output directory if needed
-#         output_dir = args.output_dir
-#         if not os.path.exists(output_dir) and args.local_rank in [-1, 0]:
-#             os.makedirs(output_dir)
-
-#         logger.info("Saving model checkpoint to %s", output_dir)
-#         # Save a trained model, configuration and tokenizer using `save_pretrained()`.
-#         # They can then be reloaded using `from_pretrained()`
-#         model_to_save = (
-#             model.module if hasattr(model, "module") else model
-#         )  # Take care of distributed/parallel training
-#         model_to_save.save_pretrained(output_dir)
-#         tokenizer.save_pretrained(output_dir)
-
-#         # Good practice: save your training arguments together with the trained model
-#         torch.save(args, os.path.join(output_dir, "training_args.bin"))
-
-#         # Load a trained model and vocabulary that you have fine-tuned
-#         #model = model_class.from_pretrained(args.output_dir)
-#         #tokenizer = tokenizer_class.from_pretrained(args.output_dir)
-#         #model.to(args.device)
-
-#     # Evaluation
-#     results = {}
-#     if args.do_eval and args.local_rank in [-1, 0]:
-#         tokenizer = tokenizer_class.from_pretrained(args.output_dir, do_lower_case=args.do_lower_case)
-#         checkpoints = [args.output_dir]
-#         if args.eval_all_checkpoints:
-#             checkpoints = list(
-#                 os.path.dirname(c) for c in sorted(glob.glob(args.output_dir + "/**/" + WEIGHTS_NAME, recursive=True))
-#             )
-#             logging.getLogger("transformers.modeling_utils").setLevel(logging.WARN)  # Reduce logging
-#         logger.info("Evaluate the following checkpoints: %s", checkpoints)
-#         for checkpoint in checkpoints:
-#             global_step = checkpoint.split("-")[-1] if len(checkpoints) > 1 else ""
-#             prefix = checkpoint.split("/")[-1] if checkpoint.find("checkpoint") != -1 else ""
-
-#             model = model_class.from_pretrained(checkpoint)
-#             model.to(args.device)
-#             result, _ = evaluate(args, model, tokenizer, labels, mode='dev', prefix=prefix)
-#             result = dict((k + "_{}".format(global_step), v) for k, v in result.items())
-#             results.update(result)
-
-
-#     if args.do_predict and args.local_rank in [-1, 0]:
-#         tokenizer = tokenizer_class.from_pretrained(args.output_dir, do_lower_case=args.do_lower_case)
-#         model = model_class.from_pretrained(args.output_dir)
-#         model.to(args.device)
-#         result, predictions = evaluate(args, model, tokenizer, labels, mode='test')
-#         predictions = list(predictions)
-#         id2label = {str(i): label for i, label in enumerate(labels)}
-
-#         # Save results
-#         output_test_results_file = os.path.join(args.output_dir, args.output_result+".txt")
-#         with open(output_test_results_file, "w") as writer:
-#             for key in sorted(result.keys()):
-#                 writer.write("{} = {}\n".format(key, str(result[key])))
-
-#         output_test_predictions_file = os.path.join(args.output_dir, args.output_prediction_file+".txt")
-#         with open(output_test_predictions_file, "w", encoding='utf-8') as writer:
-#             df = pd.read_csv(os.path.join(args.data_dir, "test.tsv"), sep='\t')
-#             N = df.shape[0]
-
-#             texts = list(df['headline'].values)
-#             for i in range(N):
-#                 output_line = texts[i] + "\t" + id2label[str(predictions[i])] + "\n"
-#                 writer.write(output_line)
-#             '''
-#             with open(os.path.join(args.data_dir, "test.tsv"), "r", encoding='utf-8') as f:
-#                 line_data = f.read()
-#             line_data =  line_data.splitlines()
-#             for l, line in enumerate(line_data):
-#                 if l == 0:
-#                     continue
-#                 else:
-#                     text_vals = line.strip().split("\t")
-#                     if len(text_vals) < 2: text_vals += [7]
-#                     text, label = text_vals
-#                     output_line = text + "\t" + id2label[str(predictions[l-1])] + "\n"
-#                     writer.write(output_line)
-#             '''
-
-#     return results
-
-# if __name__ == "__main__":
-#       main(args)
-
-
-# In[ ]:
-
-
 def main():
     parser = argparse.ArgumentParser()
     # Required parameters
@@ -1150,10 +920,10 @@ def main():
     parser.add_argument("--server_port", type=str, default="", help="For distant debugging.")
 
 
-    data_path = "../LID_DATA_VuK_NCHLT"
+    data_path = "../LID_DATA_VuK"
     create_data = Sort_CSV_into2()
-    create_data.read_and_init('../Csv_Train_test_split_NC/')
-    create_data.save_dataframes('../LID_DATA_VuK_NCHLT/')
+    create_data.read_and_init('../Csv_Train_test_split/')
+    create_data.save_dataframes('../LID_DATA_VuK/')
     
     args = parser.parse_args()
     args.data_dir = data_path  # to-change: supply data directory
@@ -1353,49 +1123,3 @@ def main():
 
 if __name__ == "__main__":
       main()
-
-
-# In[ ]:
-
-
-# # Text to test goes here
-# text_class = 'uncategorized'
-# headline = ""
-# text = ""
-# print(text)
-
-
-# In[ ]:
-
-
-# # Setup CUDA, GPU & distributed training
-# if args.local_rank == -1 or args.no_cuda:
-#     device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
-#     args.n_gpu = torch.cuda.device_count()
-# else:  # Initializes the distributed backend which will take care of sychronizing nodes/GPUs
-#     torch.cuda.set_device(args.local_rank)
-#     device = torch.device("cuda", args.local_rank)
-#     torch.distributed.init_process_group(backend="nccl")
-#     args.n_gpu = 1
-# args.device = device
-# args.per_gpu_eval_batch_size  = 1
-# args.per_gpu_train_batch_size = 1
-# args.eval_batch_size = 1
-# args.model_type = args.model_type.lower()
-# labels  =  ['sports', 'health', 'technology', 'business', 'politics', 'entertainment', 'religion', 'uncategorized']
-# id2label = {str(i): label for i, label in enumerate(labels)}
-# config_class, model_class, tokenizer_class = AutoConfig, AutoModelForSequenceClassification, AutoTokenizer
-# tokenizer = tokenizer_class.from_pretrained(args.output_dir, do_lower_case=args.do_lower_case)
-# model = model_class.from_pretrained(args.output_dir)
-# model.to(args.device)
-# result, predictions = inference_eval(headline, text, text_class, args, model, tokenizer, labels, mode='test')
-# predictions = list(predictions)
-
-# # Save results
-# # output_test_results_file = os.path.join(args.output_dir, args.output_result+".txt")
-# # with open(output_test_results_file, "w") as writer:
-# #     for key in sorted(result.keys()):
-# #         writer.write("{} = {}\n".format(key, str(result[key])))
-# output_line = headline + text + "\t" + id2label[str(predictions[0])] + "\n"
-# print(output_line)
-

@@ -114,7 +114,7 @@ def read_and_init(train_data_root_path):
             return  df_test 
 
 
-root_path = "/home/neo/thapelo/LID_Bert/Csv_Train_test_split/"
+root_path = "../Csv_Train_test_split/"
 df_test_data = read_and_init(root_path)
 N = df_test_data.shape[0]
 clean_df  = pd.DataFrame(columns=['sentence','label'])
