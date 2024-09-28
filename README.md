@@ -1,9 +1,9 @@
-DSFSI Project Starter
+DSFSI Language Identification Githup Repository
 ==============================
 
 _This documentation is aimed to help provide information that explains what a project is about._
 
-Last updated: August 2023
+Last updated: September 2024
 
 ## Table of contents 
 
