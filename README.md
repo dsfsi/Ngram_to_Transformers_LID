@@ -1,4 +1,4 @@
-DSFSI Language Identification Githup Repository
+DSFSI South African Language Identification (za-lid) Githup Repository
 ==============================
 
 _This documentation is aimed to help provide information that explains what a project is about._
