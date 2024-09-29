@@ -75,3 +75,7 @@ This is optional and provides information about which  and how each of the devel
 
 ## How to Reference 
 ---------
+
+## Licence
+
+DSFSI South African Language Identification (za-lid) © 2024 by Thapelo Sindane, Vukosi Marivate is licensed under CC BY-SA 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/4.0/
