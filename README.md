@@ -62,7 +62,8 @@ All code and datasets is contained inside the src folder:
 * NB: For files with no script, you may ned to run the python file directly
 
 ```
-
+## HuggingFace Models
+* https://huggingface.co/spaces/dsfsi/dsfsi-language-identification-spaces
 ## Authors 
 -----------
 
